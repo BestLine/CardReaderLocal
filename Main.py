@@ -1,7 +1,25 @@
 import Read
-import tray_icon
+from smartcard.System import readers
 
-Read.init()
-#tray_icon.init()
+# control code
+class ErrorCheck():
 
+    def __init__(self):
+        reader = readers()
+        if not reader:
+            print("Reader NOT CONNECTED")
+            print("Connect reader please, and try again")
+            exit_app()
+        else:
+            start_init()
+
+# emergency exit
+def exit_app():
+    exit()
+
+# launch control
+def start_init():
+    Read.init()
+
+ErrorCheck()
 

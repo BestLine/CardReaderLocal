@@ -36,15 +36,17 @@ class selectDFTELECOMObserver(CardObserver):
         for card in removedcards:
             print("-Removed: ", toHexString(card.atr, PACK))
 
-
+# complete
 def card_log(cardlog): # создание и добавление лога карт
     file = open("Card_log.log", "a")
     file.write(cardlog + '\n')
-    file.close()
+    file.close()##
 
+# emergency exit
 def exit_app():
     exit()
 
+# module init
 def init(): # инициализация работы
     cardmonitor = CardMonitor()
     selectobserver = selectDFTELECOMObserver()

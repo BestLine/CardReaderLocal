@@ -123,6 +123,10 @@ class PyKeyboard(object):  #реализация функционала эмул
                 PyKeyboard.uni_key_press(oc)
 
 ########### управляющий код
+
+def exit_app():
+    exit()
+
 def init(read):
     v = win32con
     time.sleep(0.5)

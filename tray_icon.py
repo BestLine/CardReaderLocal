@@ -62,6 +62,9 @@ class Taskbar:
             self.onDoubleClick()
         return 1
 
+def exit_app():
+    exit()
+
 def init():
     class DemoTaskbar(Taskbar):
 
@@ -81,5 +84,5 @@ def init():
         ####################### в связке пока не работает
 
 
-    DemoTaskbar()
+
     win32gui.PumpMessages()
