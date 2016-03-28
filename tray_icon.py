@@ -9,7 +9,7 @@ class Taskbar:
         self.visible = 0
         message_map = {
             win32con.WM_DESTROY: self.onDestroy,
-            win32con.WM_USER + 10: self.onTaskbarNotify,
+            win32con.WM_USER + 20: self.onTaskbarNotify,
         }
         wc = win32gui.WNDCLASS()
         hinst = wc.hInstance = win32api.GetModuleHandle(None)
@@ -57,6 +57,7 @@ class Taskbar:
     def onTaskbarNotify(self, hwnd, msg, wparam, lparam):
         if lparam == win32con.WM_LBUTTONUP:
             self.onClick()
+            Read.init()
 
         elif lparam == win32con.WM_LBUTTONDBLCLK:
             self.onDoubleClick()
@@ -65,24 +66,23 @@ class Taskbar:
 def exit_app():
     exit()
 
-def init():
-    class DemoTaskbar(Taskbar):
 
-        def __init__(self):
-            Taskbar.__init__(self)
-            icon = win32gui.LoadIcon(0, win32con.IDI_APPLICATION)
-            self.setIcon(icon)
-            self.show()
+class InitTaskbar(Taskbar):
+
+    def __init__(self):
+        Taskbar.__init__(self)
+        icon = win32gui.LoadIcon(0, win32con.IDI_APPLICATION)
+        self.setIcon(icon)
+        self.show()
 
         ####################### реакция на действия
-        def onClick(self):
-            print("клик")
+    def onClick(self):
+        print("клик")
 
-        def onDoubleClick(self):
-            print("закрытие при двойном клике!")
-            win32gui.PostQuitMessage(0)
+    def onDoubleClick(self):
+        print("закрытие при двойном клике!")
+        win32gui.PostQuitMessage(0)
         ####################### в связке пока не работает
+InitTaskbar()
+win32gui.PumpMessages()
 
-
-
-    win32gui.PumpMessages()

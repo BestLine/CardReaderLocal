@@ -1,7 +1,7 @@
-import Read
 from smartcard.System import readers
+import Read
+import tray_icon
 
-# control code
 class ErrorCheck():
 
     def __init__(self):
@@ -11,15 +11,13 @@ class ErrorCheck():
             print("Connect reader please, and try again")
             exit_app()
         else:
-            start_init()
+            print("12")
+            app_init()
 
-# emergency exit
 def exit_app():
-    exit()
+        exit()
 
-# launch control
-def start_init():
+def app_init():
     Read.init()
 
 ErrorCheck()
-
