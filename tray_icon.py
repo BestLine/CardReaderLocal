@@ -1,7 +1,9 @@
 import win32api
+from time import sleep
 import win32con
 import win32gui
 import Read
+
 
 class Taskbar:
 
@@ -13,7 +15,7 @@ class Taskbar:
         }
         wc = win32gui.WNDCLASS()
         hinst = wc.hInstance = win32api.GetModuleHandle(None)
-        wc.lpszClassName = "PythonTaskbarDemo"
+        wc.lpszClassName = "NewTaskbar"
         wc.style = win32con.CS_VREDRAW | win32con.CS_HREDRAW;
         wc.hCursor = win32gui.LoadCursor(0, win32con.IDC_ARROW)
         wc.hbrBackground = win32con.COLOR_WINDOW
@@ -21,7 +23,7 @@ class Taskbar:
         classAtom = win32gui.RegisterClass(wc)
         # создание окна
         style = win32con.WS_OVERLAPPED | win32con.WS_SYSMENU
-        self.hwnd = win32gui.CreateWindow(classAtom, "Taskbar Demo", style, \
+        self.hwnd = win32gui.CreateWindow(classAtom, "Taskbar", style, \
                     0, 0, win32con.CW_USEDEFAULT, win32con.CW_USEDEFAULT, \
                     0, 0, hinst, None)
         win32gui.UpdateWindow(self.hwnd)
@@ -61,10 +63,10 @@ class Taskbar:
 
         elif lparam == win32con.WM_LBUTTONDBLCLK:
             self.onDoubleClick()
-        return 1
+            win32gui.PostQuitMessage(1)
+            Read.exit_app()
 
-def exit_app():
-    exit()
+        return 1
 
 
 class InitTaskbar(Taskbar):
@@ -75,14 +77,16 @@ class InitTaskbar(Taskbar):
         self.setIcon(icon)
         self.show()
 
-        ####################### реакция на действия
     def onClick(self):
         print("клик")
 
     def onDoubleClick(self):
         print("закрытие при двойном клике!")
-        win32gui.PostQuitMessage(0)
-        ####################### в связке пока не работает
+        sleep(1)
+
 InitTaskbar()
 win32gui.PumpMessages()
+
+
+
 

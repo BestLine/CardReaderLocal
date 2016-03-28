@@ -1,6 +1,6 @@
 from smartcard.System import readers
-import Read
 import tray_icon
+import Read
 
 class ErrorCheck():
 
@@ -9,15 +9,13 @@ class ErrorCheck():
         if not reader:
             print("Reader NOT CONNECTED")
             print("Connect reader please, and try again")
-            exit_app()
+            Read.exit_app()
         else:
             print("12")
             app_init()
 
-def exit_app():
-        exit()
 
 def app_init():
-    Read.init()
+    tray_icon.InitTaskbar()
 
 ErrorCheck()

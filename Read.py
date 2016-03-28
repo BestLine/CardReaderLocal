@@ -42,19 +42,14 @@ def card_log(cardlog): # создание и добавление лога ка�
     file.write(cardlog + '\n')
     file.close()##
 
-# emergency exit
-def exit_app():
-    exit()
+
 
 # module init
 def init(): # инициализация работы
     cardmonitor = CardMonitor()
     selectobserver = selectDFTELECOMObserver()
     cardmonitor.addObserver(selectobserver)
+    return selectobserver, cardmonitor
 
-    if 'win32' == sys.platform: # выход по нажатию
-        print('press Enter to exit')
-        sys.stdin.read(1)
-        cardmonitor.deleteObserver(selectobserver)
-
-
+def exit_app():
+    exit()
