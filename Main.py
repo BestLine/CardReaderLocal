@@ -6,12 +6,13 @@ class ErrorCheck():
 
     def __init__(self):
         reader = readers()
+        print(reader)
         if not reader:
             print("Reader NOT CONNECTED")
             print("Connect reader please, and try again")
             Read.exit_app()
         else:
-            print("12")
+            print("Приложите карту ")
             app_init()
 
 

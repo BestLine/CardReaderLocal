@@ -1,7 +1,6 @@
 from smartcard.CardConnectionObserver import ConsoleCardConnectionObserver
 from smartcard.CardMonitoring import CardMonitor, CardObserver
 from smartcard.util import *
-import sys
 import input_plug
 import time
 
@@ -36,20 +35,19 @@ class selectDFTELECOMObserver(CardObserver):
         for card in removedcards:
             print("-Removed: ", toHexString(card.atr, PACK))
 
+
 # complete
 def card_log(cardlog): # создание и добавление лога карт
     file = open("Card_log.log", "a")
     file.write(cardlog + '\n')
-    file.close()##
-
-
+    file.close()
 
 # module init
 def init(): # инициализация работы
     cardmonitor = CardMonitor()
     selectobserver = selectDFTELECOMObserver()
     cardmonitor.addObserver(selectobserver)
-    return selectobserver, cardmonitor
 
+# emergency exit
 def exit_app():
     exit()

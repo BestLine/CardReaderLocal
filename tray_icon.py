@@ -1,9 +1,7 @@
 import win32api
-from time import sleep
 import win32con
 import win32gui
 import Read
-
 
 class Taskbar:
 
@@ -56,37 +54,28 @@ class Taskbar:
         self.hide()
         win32gui.PostQuitMessage(0) # закрытие приложения
 
-    def onTaskbarNotify(self, hwnd, msg, wparam, lparam):
+    def onTaskbarNotify(self, hwnd, msg, wparam, lparam): # выход на двойной клик, действие на одиночный клик пока не задано
         if lparam == win32con.WM_LBUTTONUP:
             self.onClick()
-            Read.init()
 
         elif lparam == win32con.WM_LBUTTONDBLCLK:
             self.onDoubleClick()
-            win32gui.PostQuitMessage(1)
-            Read.exit_app()
-
+            win32gui.PostQuitMessage(0)
         return 1
 
 
 class InitTaskbar(Taskbar):
 
-    def __init__(self):
+    def __init__(self): # основной запуск иконки
         Taskbar.__init__(self)
         icon = win32gui.LoadIcon(0, win32con.IDI_APPLICATION)
         self.setIcon(icon)
         self.show()
+        Read.init()
+        win32gui.PumpMessages()
 
-    def onClick(self):
+    def onClick(self): # оповещение о событии
         print("клик")
 
-    def onDoubleClick(self):
+    def onDoubleClick(self): # оповещение о событии
         print("закрытие при двойном клике!")
-        sleep(1)
-
-InitTaskbar()
-win32gui.PumpMessages()
-
-
-
-
