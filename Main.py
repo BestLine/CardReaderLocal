@@ -1,11 +1,9 @@
 from smartcard.System import readers
 import pyQT5tray
-
 import Read
 
-class ErrorCheck():
+class Error_Check():
 
-    def __init__(self):
         reader = readers()
         if not reader:
             print("Reader NOT CONNECTED")
@@ -17,6 +15,7 @@ class ErrorCheck():
 
 
 def app_init():
-    pyQT5tray.trayIcon()
+    pyQT5tray.Tray_Icon()
 
-ErrorCheck()
+Error_Check()
+# Complete

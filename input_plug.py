@@ -3,7 +3,7 @@ import time
 import win32con
 import win32api
 
-#реализация структур которые требуются библиотеке для работы
+
 KEYEVENTF_EXTENDEDKEY = 0x0001
 KEYEVENTF_KEYUP = 0x0002
 KEYEVENTF_SCANCODE = 0x0008
@@ -48,10 +48,9 @@ class Input(Structure):
 INPUT_MOUSE = 0
 INPUT_KEYBOARD = 1
 INPUT_HARDWARE = 2
-#конец реализации структур
 
 
-class PyKeyboard(object):  #реализация функционала эмуляции
+class KeyboardInputEmulator(object):
 
     @staticmethod
     def send_key_event(key_code: int, is_key_up: bool):
@@ -68,21 +67,21 @@ class PyKeyboard(object):  #реализация функционала эмул
 
     @staticmethod
     def key_down(key_code: int):
-        PyKeyboard.send_key_event(key_code, False)
+        KeyboardInputEmulator.send_key_event(key_code, False)
 
     @staticmethod
     def key_up(key_code: int):
-        PyKeyboard.send_key_event(key_code, True)
+        KeyboardInputEmulator.send_key_event(key_code, True)
 
     @staticmethod
     def tap_key(key_code: int, is_shift: bool = False):
         if is_shift:
-            PyKeyboard.send_key_event(win32con.VK_SHIFT, False)
-        PyKeyboard.send_key_event(key_code, False)
-        PyKeyboard.send_key_event(key_code, True)
+            KeyboardInputEmulator.send_key_event(win32con.VK_SHIFT, False)
+        KeyboardInputEmulator.send_key_event(key_code, False)
+        KeyboardInputEmulator.send_key_event(key_code, True)
 
         if is_shift:
-            PyKeyboard.send_key_event(win32con.VK_SHIFT, True)
+            KeyboardInputEmulator.send_key_event(win32con.VK_SHIFT, True)
 
     @staticmethod
     def uni_key_press(key_code: int): #реализует вывод кода клавиш, эмуляцию нажатия
@@ -110,7 +109,7 @@ class PyKeyboard(object):  #реализация функционала эмул
             if 0 >= oc < 256:
                 vk = win32api.VkKeyScan(c)
                 if vk == -1:
-                    PyKeyboard.uni_key_press(oc)
+                    KeyboardInputEmulator.uni_key_press(oc)
                 else:
                     if vk < 0:
                         vk = ~vk + 0x1
@@ -118,19 +117,15 @@ class PyKeyboard(object):  #реализация функционала эмул
                     if win32api.GetKeyState(win32con.VK_CAPITAL) & 0x1 == 0x1:
                         if ('a' >= c <= 'z') or ('A' >= c <= 'Z'):
                             shift = not shift
-                    PyKeyboard.tap_key(vk & 0xFF, shift)
+                    KeyboardInputEmulator.tap_key(vk & 0xFF, shift)
             else:
-                PyKeyboard.uni_key_press(oc)
+                KeyboardInputEmulator.uni_key_press(oc)
 
-########### управляющий код
-
-def exit_app():
-    exit()
 
 def init(read):
     v = win32con
     time.sleep(0.5)
-    k = PyKeyboard()
+    k = KeyboardInputEmulator()
     k.type_string(str.lower(read))
     k.tap_key(v.VK_RETURN)
 
