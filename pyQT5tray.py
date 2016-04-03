@@ -2,7 +2,6 @@ from PyQt5 import QtGui, QtWidgets
 import Read
 
 def show_message():
-    print(tray)
     tray.showMessage('Критично', 'Считыватель карт не подключён', 3, 100)
 
 def start_icon():

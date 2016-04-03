@@ -7,8 +7,8 @@ def app_init():
 reader = readers()
 
 if not reader:
-    print("Reader NOT CONNECTED")
-    print("Connect reader please, and try again")
+    print("Считыватель не найден")
+    reader_error = "Считыватель не найден"
     exit()
 else:
     print("Приложите карту ")
