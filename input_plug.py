@@ -129,4 +129,9 @@ def init(read):
     k.type_string(str.lower(read))
     k.tap_key(v.VK_RETURN)
 
-
+"""
+script = Card Reader
+version = 1.0
+autor = Best Line
+WithOutHelp = false
+"""

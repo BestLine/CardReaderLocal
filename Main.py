@@ -15,3 +15,10 @@ else:
     app_init()
 
 # Complete
+
+"""
+script = Card Reader
+version = 1.0
+autor = Best Line
+WithOutHelp = false
+"""
