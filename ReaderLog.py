@@ -18,6 +18,9 @@ class Reader_Log(ReaderObserver):
         log_building = "REMOVED = " + reader_str, time_event
         Adds.card_reader_log(str(log_building))
 
+        if not addedreaders:
+            Adds.show_disconnect()
+
 def init():
     print("Лог ридеров = ВКЛ")
     readermonitor = ReaderMonitor()

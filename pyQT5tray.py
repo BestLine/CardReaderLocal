@@ -4,6 +4,9 @@ import Read
 def show_message():
     tray.showMessage('Критично', 'Считыватель карт не подключён', 3, 100)
 
+def show_disconnect_reader():
+    tray.showMessage('Критично', 'Считыватель карт был отключён', 2, 100)
+
 def start_icon():
     global tray
     app = QtWidgets.QApplication([])

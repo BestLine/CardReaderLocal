@@ -26,6 +26,17 @@ def show():
         log_building = (error_log, time_event)
         error_logging(str(log_building))
 
+def show_disconnect():
+    print("Ридер был отключён")
+    try:
+        pyQT5tray.show_disconnect_reader()
+    except:
+        print("ошибка вывода сообщения")
+        error_log = "Ошибка вывода сообщения о не подключённом ридере"
+        log_building = (error_log, time_event)
+        error_logging(str(log_building))
+
+
 """
 script = Card Reader
 version = 1.0
