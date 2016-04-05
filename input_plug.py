@@ -124,14 +124,13 @@ class KeyboardInputEmulator(object):
 
 def init(read):
     v = win32con
-    time.sleep(0.5)
     k = KeyboardInputEmulator()
     k.type_string(str.lower(read))
     k.tap_key(v.VK_RETURN)
 
 """
 script = Card Reader
-version = 1.0
+version = 1.01
 autor = Best Line
 WithOutHelp = false
 """
