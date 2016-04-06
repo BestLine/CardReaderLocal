@@ -17,9 +17,17 @@ class Reader_Log(ReaderObserver):
         reader_str = str(removedreaders)
         log_building = "REMOVED = " + reader_str, time_event
         Adds.card_reader_log(str(log_building))
-
-        if not addedreaders:
+        while not addedreaders:
+            time.sleep(1.5)
             Adds.show_disconnect()
+            if not removedreaders:
+                break
+        else:
+            print("123")
+
+
+
+
 
 def init():
     print("Лог ридеров = ВКЛ")
