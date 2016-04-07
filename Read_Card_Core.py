@@ -4,9 +4,9 @@ from smartcard.Exceptions import ListReadersException
 from smartcard.scard import SCARD_E_NO_READERS_AVAILABLE, SCARD_E_SERVICE_STOPPED, SCardListReaders
 from smartcard.util import *
 import smartcard.pcsc.PCSCCardRequest
-import input_plug
+import Keyboard_Input_Core
 import time
-import ReaderLog
+import Reader_Log
 
 SELECT = [0xFF, 0xCA, 0x00, 0x00, 0x00]
 out_prefix = "desfire-"
@@ -16,7 +16,6 @@ class Select_Observer(CardObserver):
     def __init__(self):
         super().__init__()
         self.observer = ConsoleCardConnectionObserver()
-
 
     def update(self, observable, actions):
         global read
@@ -34,7 +33,7 @@ class Select_Observer(CardObserver):
             time_event = time.ctime(time.time())
             read_log = str.lower(create_out)
             create_log = read_log, time_event
-            input_plug.init(read=str(create_out))
+            Keyboard_Input_Core.init(read=str(create_out))
             card_logging(str(create_log))
 
         for card in removedcards:
@@ -72,7 +71,7 @@ def init():
     card_monitor = CardMonitor()
     select_observer = Select_Observer()
     card_monitor.addObserver(select_observer)
-    ReaderLog.init()
+    Reader_Log.init()
 # Complete
 
 """

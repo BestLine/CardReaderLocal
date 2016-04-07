@@ -1,10 +1,10 @@
 from smartcard.System import readers
-import pyQT5tray
-
-def app_init():
-    pyQT5tray.start_icon()
+import Tray_Icon
 
 reader = readers()
+
+def app_init():
+    Tray_Icon.start_icon()
 
 if not reader:
     print("Считыватель не найден")

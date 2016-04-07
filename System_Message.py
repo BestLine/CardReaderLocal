@@ -1,5 +1,5 @@
 import time
-import pyQT5tray
+import Tray_Icon
 
 time_event = str(time.ctime(time.time()))
 
@@ -16,7 +16,7 @@ def error_logging(log_building):
 def show():
     print("пробую..")
     try:
-        pyQT5tray.show_message()
+        Tray_Icon.show_message()
         error_log = "Ошибка. Ридер не найден"
         log_building = (error_log, time_event)
         error_logging(str(log_building))
@@ -29,7 +29,7 @@ def show():
 def show_disconnect():
     print("Ридер был отключён")
     try:
-        pyQT5tray.show_disconnect_reader()
+        Tray_Icon.show_disconnect_reader()
     except:
         print("ошибка вывода сообщения")
         error_log = "Ошибка вывода сообщения о не подключённом ридере"

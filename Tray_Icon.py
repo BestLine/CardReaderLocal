@@ -1,5 +1,5 @@
 from PyQt5 import QtGui, QtWidgets
-import Read
+import Read_Card_Core
 
 def show_message():
     tray.showMessage('Критично', 'Считыватель карт не подключён', 3, 100)
@@ -14,7 +14,7 @@ def start_icon():
     tray = QtWidgets.QSystemTrayIcon(set_icon)
     tray.setToolTip("Reader")
     tray.show()
-    Read.init()
+    Read_Card_Core.init()
     app.exec_()
 
 # Completed

@@ -1,7 +1,8 @@
 from __future__ import print_function
 import time
 from smartcard.ReaderMonitoring import ReaderMonitor, ReaderObserver
-import Adds
+from smartcard.System import readers
+import System_Message
 
 time_event = str(time.ctime(time.time()))
 
@@ -12,22 +13,18 @@ class Reader_Log(ReaderObserver):
 
         reader_str = str(addedreaders)
         log_building = "ADDED = " + reader_str, time_event
-        Adds.card_reader_log(str(log_building))
+        System_Message.card_reader_log(str(log_building))
 
         reader_str = str(removedreaders)
         log_building = "REMOVED = " + reader_str, time_event
-        Adds.card_reader_log(str(log_building))
+        System_Message.card_reader_log(str(log_building))
+
         while not addedreaders:
             time.sleep(1.5)
-            Adds.show_disconnect()
-            if not removedreaders:
+            System_Message.show_disconnect()
+            reader = readers()
+            if list(filter(lambda r: str(r) == 'ACS ACR1281 1S Dual Reader PICC 0', reader)):
                 break
-        else:
-            print("123")
-
-
-
-
 
 def init():
     print("Лог ридеров = ВКЛ")
@@ -37,7 +34,7 @@ def init():
 
 """
 script = Card Reader
-version = 1.0
+version = 1.1
 autor = Best Line
 WithOutHelp = false
 """
