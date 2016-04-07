@@ -36,9 +36,6 @@ class Select_Observer(CardObserver):
             Keyboard_Input_Core.init(read=str(create_out))
             card_logging(str(create_log))
 
-        for card in removedcards:
-            print("-Removed: ", toHexString(card.atr, PACK))
-
 
 def card_logging(create_log):
     file = open("card_log.log", "a")
@@ -63,7 +60,6 @@ def init():
                     reader = str(reader)
                 if reader in pcscreaders:
                     readers = readers + [reader]
-
         return readers
 
     smartcard.pcsc.PCSCCardRequest.PCSCCardRequest.getReaderNames = getReaderNames
@@ -72,6 +68,7 @@ def init():
     select_observer = Select_Observer()
     card_monitor.addObserver(select_observer)
     Reader_Log.init()
+
 # Complete
 
 """

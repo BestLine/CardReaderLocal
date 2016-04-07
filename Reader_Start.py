@@ -1,17 +1,16 @@
 from smartcard.System import readers
 import Tray_Icon
-
-reader = readers()
+import Error_Logger
 
 def app_init():
     Tray_Icon.start_icon()
 
-if not reader:
-    print("Считыватель не найден")
-    reader_error = "Считыватель не найден"
+reader = readers()
+if not list(filter(lambda r: str(r) == 'ACS ACR1281 1S Dual Reader PICC 0', reader)):
+    error = "БУМ. Ридер не был найден"
+    Error_Logger.critical_message(str(error))
     exit()
 else:
-    print("Приложите карту ")
     app_init()
 
 # Complete
