@@ -2,6 +2,7 @@ from __future__ import print_function
 import time
 from smartcard.ReaderMonitoring import ReaderMonitor, ReaderObserver
 from smartcard.System import readers
+import Error_Logger
 import System_Message
 
 time_event = str(time.ctime(time.time()))
@@ -12,12 +13,12 @@ class Reader_Log(ReaderObserver):
         (addedreaders, removedreaders) = actions
 
         reader_str = str(addedreaders)
-        log_building = "ADDED = " + reader_str, time_event
-        System_Message.card_reader_log(str(log_building))
+        error = "Ридер подключён - ", reader_str
+        Error_Logger.info_message(str(error))
 
         reader_str = str(removedreaders)
-        log_building = "REMOVED = " + reader_str, time_event
-        System_Message.card_reader_log(str(log_building))
+        error = "Ридер отключён - ", reader_str
+        Error_Logger.info_message(str(error))
 
         while not addedreaders:
             time.sleep(1.5)
@@ -27,10 +28,11 @@ class Reader_Log(ReaderObserver):
                 break
 
 def init():
-    print("Лог ридеров = ВКЛ")
     readermonitor = ReaderMonitor()
     readerobserver = Reader_Log()
     readermonitor.addObserver(readerobserver)
+    error = "Мониторинг ридеров запущен"
+    Error_Logger.debug_message(str(error))
 
 """
 script = Card Reader

@@ -1,4 +1,6 @@
 from PyQt5 import QtGui, QtWidgets
+
+import Error_Logger
 import Read_Card_Core
 
 def show_message(): # зарезервировано потому что у меня была идея, но я забыл
@@ -14,6 +16,8 @@ def start_icon():
     tray = QtWidgets.QSystemTrayIcon(set_icon)
     tray.setToolTip("Reader")
     tray.show()
+    error = "Иконка трея успешно выведена"
+    Error_Logger.debug_message(str(error))
     show_message()
     Read_Card_Core.init()
     app.exec_()

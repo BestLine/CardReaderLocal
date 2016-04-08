@@ -11,6 +11,8 @@ if not list(filter(lambda r: str(r) == 'ACS ACR1281 1S Dual Reader PICC 0', read
     Error_Logger.critical_message(str(error))
     exit()
 else:
+    error = "Скрипт запущен"
+    Error_Logger.debug_message(str(error))
     app_init()
 
 # Complete

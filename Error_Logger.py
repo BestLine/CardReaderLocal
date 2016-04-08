@@ -1,6 +1,6 @@
 import logging
 
-logging.basicConfig(format='%(levelname)-8s [%(asctime)s] %(message)s', level=logging.DEBUG, filename='error_log.log')
+logging.basicConfig(format='%(levelname)-8s [%(asctime)s] %(message)s', level=logging.INFO, filename='error_log.log')
 
 def debug_message(error):
     logging.debug(error)

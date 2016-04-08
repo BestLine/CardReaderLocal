@@ -1,8 +1,8 @@
 from ctypes import *
-import time
 import win32con
 import win32api
 
+import Error_Logger
 
 KEYEVENTF_EXTENDEDKEY = 0x0001
 KEYEVENTF_KEYUP = 0x0002
@@ -125,6 +125,8 @@ class KeyboardInputEmulator(object):
 def init(read):
     v = win32con
     k = KeyboardInputEmulator()
+    error = "Эмуляция нажатий запущена"
+    Error_Logger.debug_message(str(error))
     k.type_string(str.lower(read))
     k.tap_key(v.VK_RETURN)
 
