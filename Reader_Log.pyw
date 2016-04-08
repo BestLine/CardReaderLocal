@@ -36,7 +36,7 @@ def init():
 
 """
 script = Card Reader
-version = 1.1
+version = 1.2
 autor = Best Line
 WithOutHelp = false
 """

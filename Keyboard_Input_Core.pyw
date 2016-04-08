@@ -1,7 +1,6 @@
 from ctypes import *
 import win32con
 import win32api
-
 import Error_Logger
 
 KEYEVENTF_EXTENDEDKEY = 0x0001
@@ -44,11 +43,9 @@ class Input(Structure):
     _fields_ = [("type", c_ulong),
                 ("ui", UnionInput)]
 
-
 INPUT_MOUSE = 0
 INPUT_KEYBOARD = 1
 INPUT_HARDWARE = 2
-
 
 class KeyboardInputEmulator(object):
 

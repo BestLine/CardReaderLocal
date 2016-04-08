@@ -19,7 +19,7 @@ else:
 
 """
 script = Card Reader
-version = 1.0
+version = 1.2
 autor = Best Line
 WithOutHelp = false
 """

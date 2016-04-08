@@ -26,7 +26,7 @@ def start_icon():
 
 """
 script = Card Reader
-version = 1.0
+version = 1.1
 autor = Best Line
 WithOutHelp = false
 """
