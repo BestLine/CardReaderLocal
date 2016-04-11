@@ -1,10 +1,17 @@
-from __future__ import print_function
+"""
+script = Card Reader
+version = 1.2
+autor = Best Line
+WithOutHelp = false
+"""
+
 import time
 from smartcard.ReaderMonitoring import ReaderMonitor, ReaderObserver
 from smartcard.System import readers
-import Error_Logger
-import System_Message
+import Tray_Icon
+import logging
 
+logging.basicConfig(format='%(levelname)-8s [%(asctime)s] %(message)s', level=logging.INFO, filename='error_log.log')
 time_event = str(time.ctime(time.time()))
 
 class Reader_Log(ReaderObserver):
@@ -14,15 +21,15 @@ class Reader_Log(ReaderObserver):
 
         reader_str = str(addedreaders)
         error = "Ридер подключён - ", reader_str
-        Error_Logger.info_message(str(error))
+        logging.info(str(error))
 
         reader_str = str(removedreaders)
         error = "Ридер отключён - ", reader_str
-        Error_Logger.info_message(str(error))
+        logging.info(str(error))
 
         while not addedreaders:
             time.sleep(1.5)
-            System_Message.show_disconnect()
+            Tray_Icon.show_disconnect()
             reader = readers()
             if list(filter(lambda r: str(r) == 'ACS ACR1281 1S Dual Reader PICC 0', reader)):
                 break
@@ -31,12 +38,5 @@ def init():
     readermonitor = ReaderMonitor()
     readerobserver = Reader_Log()
     readermonitor.addObserver(readerobserver)
-    error = "Мониторинг ридеров запущен"
-    Error_Logger.debug_message(str(error))
+    logging.debug(str("Мониторинг ридеров запущен"))
 
-"""
-script = Card Reader
-version = 1.2
-autor = Best Line
-WithOutHelp = false
-"""
