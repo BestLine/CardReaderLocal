@@ -1,11 +1,11 @@
 """
-script = Card Reader
-version = 1.1
-autor = Best Line
+script      = Card Reader
+version     = 2.0
+autor       = Best Line
 WithOutHelp = false
 """
 from PyQt5 import QtGui, QtWidgets
-import Read_Card_Core
+import reading_and_input_imulation
 import logging
 
 logging.basicConfig(format='%(levelname)-8s [%(asctime)s] %(message)s', level=logging.INFO, filename='error_log.log')
@@ -26,5 +26,5 @@ def start_icon():
     tray.show()
     logging.debug(str("Иконка трея успешно выведена"))
     show_message()
-    Read_Card_Core.init()
+    reading_and_input_imulation.init()
     app.exec_()

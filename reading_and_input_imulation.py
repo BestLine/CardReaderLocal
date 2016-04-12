@@ -1,6 +1,6 @@
 """
 script      = Card Reader
-version     = 1.2
+version     = 2.0
 autor       = Best Line
 WithOutHelp = false
 """
@@ -11,7 +11,7 @@ from smartcard.Exceptions import ListReadersException
 from smartcard.scard import SCARD_E_NO_READERS_AVAILABLE, SCARD_E_SERVICE_STOPPED, SCardListReaders
 from smartcard.util import *
 import smartcard.pcsc.PCSCCardRequest
-import Reader_Log
+import reader_logging
 from ctypes import *
 import win32con
 import win32api
@@ -181,5 +181,5 @@ def init():
     card_monitor.addObserver(select_observer)
     error = "Считывание запущено"
     logging.debug(str(error))
-    Reader_Log.init()
+    reader_logging.init()
 

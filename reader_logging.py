@@ -1,14 +1,14 @@
 """
-script = Card Reader
-version = 1.2
-autor = Best Line
+script      = Card Reader
+version     = 1.2
+autor       = Best Line
 WithOutHelp = false
 """
 
 import time
 from smartcard.ReaderMonitoring import ReaderMonitor, ReaderObserver
 from smartcard.System import readers
-import Tray_Icon
+import tray_icon
 import logging
 
 logging.basicConfig(format='%(levelname)-8s [%(asctime)s] %(message)s', level=logging.INFO, filename='error_log.log')
@@ -29,7 +29,7 @@ class Reader_Log(ReaderObserver):
 
         while not addedreaders:
             time.sleep(1.5)
-            Tray_Icon.show_disconnect()
+            tray_icon.show_disconnect()
             reader = readers()
             if list(filter(lambda r: str(r) == 'ACS ACR1281 1S Dual Reader PICC 0', reader)):
                 break
