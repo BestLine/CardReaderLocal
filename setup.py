@@ -1,7 +1,11 @@
 from cx_Freeze import setup, Executable
 import sys
-
-
+smart = "C:\Python27\Lib\site-packages\smartcard"
+build_exe_options = {
+    "include_files": ["Origin.ico",
+                      "C:\Python27\Lib\site-packages\smartcard",
+                      "config.py"]
+}
 
 
 base = None
@@ -12,6 +16,6 @@ setup(
     name="CardReader",
     version="2.0",
     description="Card",
-
+    options={"build_exe": build_exe_options},
     executables=[Executable("main.pyw", base=base)]
 )
