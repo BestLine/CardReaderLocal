@@ -1,20 +1,10 @@
-"""
-script      = Card Reader
-version     = 2.0
-autor       = Best Line
-WithOutHelp = false
-"""
 from PyQt5 import QtGui, QtWidgets
-import reading_and_input_imulation
-import logging
+import reading
 
-logging.basicConfig(format='%(levelname)-8s [%(asctime)s] %(message)s', level=logging.INFO, filename='error_log.log')
-
-def show_message(): # зарезервировано потому что у меня была идея, но я забыл
+def show_message():
     tray.showMessage(' Скрипт работает! ', ' Приложите карту ', 1, 100)
 
-def show_disconnect():
-    logging.warning(str("Ошибка. Ридер был отключён"))
+def show_disconnect_reader():
     tray.showMessage('Критично', 'Считыватель карт был отключён', 2, 100)
 
 def start_icon():
@@ -24,7 +14,6 @@ def start_icon():
     tray = QtWidgets.QSystemTrayIcon(set_icon)
     tray.setToolTip("Reader")
     tray.show()
-    logging.debug(str("Иконка трея успешно выведена"))
     show_message()
-    reading_and_input_imulation.init()
+    reading.init()
     app.exec_()

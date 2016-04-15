@@ -1,25 +1,12 @@
 """
-script      = Card Reader
-version     = 2.0
-autor       = Best Line
+script = Card Reader
+version = 1.2
+autor = Best Line
 WithOutHelp = false
 """
-
-from smartcard.CardConnectionObserver import ConsoleCardConnectionObserver
-from smartcard.CardMonitoring import CardMonitor, CardObserver
-from smartcard.Exceptions import ListReadersException
-from smartcard.scard import SCARD_E_NO_READERS_AVAILABLE, SCARD_E_SERVICE_STOPPED, SCardListReaders
-from smartcard.util import *
-import smartcard.pcsc.PCSCCardRequest
-import reader_logging
 from ctypes import *
 import win32con
 import win32api
-import logging
-
-logging.basicConfig(format='%(levelname)-8s [%(asctime)s] %(message)s', level=logging.INFO, filename='error_log.log')
-SELECT = [0xFF, 0xCA, 0x00, 0x00, 0x00]
-out_prefix = "desfire-"
 
 KEYEVENTF_EXTENDEDKEY = 0x0001
 KEYEVENTF_KEYUP = 0x0002
@@ -34,10 +21,12 @@ class KeyBdInput(Structure):
         ("time", c_ulong),
         ("dwExtraInfo", POINTER(c_ulong))]
 
+
 class HardwareInput(Structure):
     _fields_ = [("uMsg", c_ulong),
                 ("wParamL", c_short),
                 ("wParamH", c_ushort)]
+
 
 class MouseInput(Structure):
     _fields_ = [("dx", c_long),
@@ -47,10 +36,12 @@ class MouseInput(Structure):
                 ("time", c_ulong),
                 ("dwExtraInfo", POINTER(c_ulong))]
 
+
 class UnionInput(Union):
     _fields_ = [("ki", KeyBdInput),
                 ("mi", MouseInput),
                 ("hi", HardwareInput)]
+
 
 class Input(Structure):
     _fields_ = [("type", c_ulong),
@@ -66,7 +57,6 @@ class KeyboardInputEmulator(object):
     def send_key_event(key_code: int, is_key_up: bool):
         Inputs = Input * 1
         inputs = Inputs()
-
         inputs[0].type = INPUT_KEYBOARD
         inputs[0].ui.ki.wVk = key_code
 
@@ -131,55 +121,8 @@ class KeyboardInputEmulator(object):
             else:
                 KeyboardInputEmulator.uni_key_press(oc)
 
-class Select_Observer(CardObserver):
-
-    def __init__(self):
-        super().__init__()
-        self.observer = ConsoleCardConnectionObserver()
-
-    def update(self, observable, actions):
-        global read
-        (addedcards, removedcards) = actions
-
-        for card in addedcards:
-            card.connection = card.createConnection()
-            card.connection.connect()
-            card.connection.addObserver(self.observer)
-            response, sw1, sw2 = card.connection.transmit(SELECT)
-            formating_out = toHexString(response[::-1], PACK)
-            create_out = out_prefix + formating_out
-            v = win32con
-            k = KeyboardInputEmulator()
-            error = "Эмуляция нажатий запущена"
-            logging.debug(str(error))
-            k.type_string(str.lower(create_out))
-            k.tap_key(v.VK_RETURN)
-
-def init():
-
-    def getReaderNames(self): # Здесь мы переопределяем библиотечную функцию для защиты от падений. Было добавлено новое условие по сравнению со стандартной
-
-        hresult, pcscreaders = SCardListReaders(self.hcontext, [])
-        if 0 != hresult and SCARD_E_NO_READERS_AVAILABLE and SCARD_E_SERVICE_STOPPED != hresult:
-            raise ListReadersException(hresult)
-
-        readers = []
-
-        if None == self.readersAsked:
-            readers = pcscreaders
-        else:
-            for reader in self.readersAsked:
-                if not isinstance(reader, type("")):
-                    reader = str(reader)
-                if reader in pcscreaders:
-                    readers = readers + [reader]
-        return readers
-
-    smartcard.pcsc.PCSCCardRequest.PCSCCardRequest.getReaderNames = getReaderNames
-    card_monitor = CardMonitor()
-    select_observer = Select_Observer()
-    card_monitor.addObserver(select_observer)
-    error = "Считывание запущено"
-    logging.debug(str(error))
-    reader_logging.init()
-
+def init(create_out):
+    v = win32con
+    k = KeyboardInputEmulator()
+    k.type_string(str.lower(create_out))
+    k.tap_key(v.VK_RETURN)
