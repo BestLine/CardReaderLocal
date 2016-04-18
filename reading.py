@@ -1,3 +1,5 @@
+import logging
+import sys
 from smartcard.CardConnectionObserver import ConsoleCardConnectionObserver
 from smartcard.CardMonitoring import CardMonitor, CardObserver
 from smartcard.Exceptions import ListReadersException
@@ -12,6 +14,8 @@ import reader_logging
 SELECT = [0xFF, 0xCA, 0x00, 0x00, 0x00]
 out_prefix = "desfire-"
 
+
+
 class Select_Observer(CardObserver):
 
     def __init__(self):
@@ -24,13 +28,21 @@ class Select_Observer(CardObserver):
         reader = readers()
         if not list(filter(lambda r: str(r) in config.IGNORE_READERS, reader)):
             for card in addedcards:
-                card.connection = card.createConnection()
-                card.connection.connect()
-                card.connection.addObserver(self.observer)
-                response, sw1, sw2 = card.connection.transmit(SELECT)
-                formating_out = toHexString(response[::-1], PACK)
-                create_out = out_prefix + formating_out
-                input_emulation.init(create_out)
+                try:
+                    card.connection = card.createConnection()
+                    card.connection.connect()
+                    card.connection.addObserver(self.observer)
+                    response, sw1, sw2 = card.connection.transmit(SELECT)
+                    formating_out = toHexString(response[::-1], PACK)
+                    create_out = out_prefix + formating_out
+                    input_emulation.init(create_out)
+                except:
+
+                    def my_handler(type, value, tb):
+                        logger.exception("Uncaught exception: {0}".format(str(value)))
+
+                    logger = logging.getLogger('mylogger')
+                    sys.excepthook = my_handler
 
 def init():
 

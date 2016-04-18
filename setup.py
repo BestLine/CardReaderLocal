@@ -1,12 +1,12 @@
 from cx_Freeze import setup, Executable
 import sys
+
 smart = "C:\Python27\Lib\site-packages\smartcard"
 build_exe_options = {
     "include_files": ["Origin.ico",
-                      "C:\Python27\Lib\site-packages\smartcard",
+                      "C:\Python34_x32\Lib\site-packages\smartcard",
                       "config.py"]
 }
-
 
 base = None
 if sys.platform == "win32":
